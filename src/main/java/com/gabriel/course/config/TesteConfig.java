@@ -39,7 +39,7 @@ public class TesteConfig implements CommandLineRunner {
 		
 		Category c1 = new Category(null, "Books");
 		Category c2 = new Category(null, "Eletronics");
-		Category c3 = new Category(null, "Shoes");
+		Category c3 = new Category(null, "Computers");
 		
 		Products p1 = new Products(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
 		Products p2 = new Products(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
@@ -56,6 +56,16 @@ public class TesteConfig implements CommandLineRunner {
 		
 		categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		
+		p1.getCategories().add(c1);
+		p2.getCategories().add(c2);
+		p2.getCategories().add(c3);
+		p3.getCategories().add(c3);
+		p4.getCategories().add(c3);
+		p5.getCategories().add(c1);
+		
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 	}
