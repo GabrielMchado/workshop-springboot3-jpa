@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.gabriel.course.entities.Category;
 import com.gabriel.course.entities.Order;
+import com.gabriel.course.entities.OrderItem;
 import com.gabriel.course.entities.Products;
 import com.gabriel.course.entities.User;
 import com.gabriel.course.entities.enums.OrderStatus;
 import com.gabriel.course.repositories.CategoryRepository;
+import com.gabriel.course.repositories.OrderItemRepository;
 import com.gabriel.course.repositories.OrderRepository;
 import com.gabriel.course.repositories.ProductRepository;
 import com.gabriel.course.repositories.UserRepository;
@@ -34,6 +36,9 @@ public class TesteConfig implements CommandLineRunner {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -47,13 +52,6 @@ public class TesteConfig implements CommandLineRunner {
 		Products p4 = new Products(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
 		Products p5 = new Products(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		
-		User user1 = new User(null, "Maria Silva", "maria@yahoo.com", "1199997778", "abc");
-		User user2 = new User(null, "Jose Almeida", "jose@hotmail.com", "3198877667", "1234");
-		
-		Order o1 = new Order(null, Instant.parse("2023-06-20T19:53:07Z"), OrderStatus.PAID, user1);
-		Order o2 = new Order(null, Instant.parse("2023-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, user2);
-		Order o3 = new Order(null, Instant.parse("2023-07-22T15:21:22Z"), OrderStatus.DELIVERED, user1);
-		
 		categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		
@@ -66,8 +64,23 @@ public class TesteConfig implements CommandLineRunner {
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		
+		User user1 = new User(null, "Maria Silva", "maria@yahoo.com", "1199997778", "abc");
+		User user2 = new User(null, "Jose Almeida", "jose@hotmail.com", "3198877667", "1234");
+		
+		Order o1 = new Order(null, Instant.parse("2023-06-20T19:53:07Z"), OrderStatus.PAID, user1);
+		Order o2 = new Order(null, Instant.parse("2023-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, user2);
+		Order o3 = new Order(null, Instant.parse("2023-07-22T15:21:22Z"), OrderStatus.DELIVERED, user1);
+		
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
 	}
 	
 }

@@ -88,10 +88,6 @@ public class User implements Serializable{
 		return orders;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
